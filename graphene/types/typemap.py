@@ -304,7 +304,7 @@ class TypeMap(GraphQLTypeMap):
                     args=args,
                     resolver=field.get_resolver(
                         self.get_resolver_for_type(
-                            type, name, field.default_value
+                            type_, name, field.default_value
                         )
                     ),
                     deprecation_reason=field.deprecation_reason,
