@@ -43,7 +43,7 @@ class Interface(BaseType):
         )
 
     @classmethod
-    def resolve_type(cls, instance, info):
+    def _resolve_type(cls, instance, info):
         from .objecttype import ObjectType
 
         if isinstance(instance, ObjectType):

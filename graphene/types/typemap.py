@@ -151,7 +151,7 @@ class TypeMap(GraphQLTypeMap):
                 description = type_._meta.description(value)
 
             if not deprecation_reason and callable(
-                type._meta.deprecation_reason
+                type_._meta.deprecation_reason
             ):
                 deprecation_reason = type._meta.deprecation_reason(value)
 
@@ -219,9 +219,9 @@ class TypeMap(GraphQLTypeMap):
             return type_from_map
 
         _resolve_type = None
-        if type_.resolve_type:
+        if type_._resolve_type:
             _resolve_type = partial(
-                resolve_type, type_.resolve_type, map, type_._meta.name
+                resolve_type, type_._resolve_type, map, type_._meta.name
             )
         return GrapheneInterfaceType(
             graphene_type=type_,
@@ -244,9 +244,9 @@ class TypeMap(GraphQLTypeMap):
 
     def construct_union(self, map, type_):
         _resolve_type = None
-        if type_.resolve_type:
+        if type_._resolve_type:
             _resolve_type = partial(
-                resolve_type, type_.resolve_type, map, type_._meta.name
+                resolve_type, type_._resolve_type, map, type_._meta.name
             )
 
         def types():
