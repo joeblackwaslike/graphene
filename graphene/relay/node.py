@@ -27,13 +27,17 @@ def is_node(objecttype):
 
 
 class GlobalID(Field):
-    def __init__(self, node=None, parent_type=None, required=True, *args, **kwargs):
+    def __init__(
+        self, node=None, parent_type=None, required=True, *args, **kwargs
+    ):
         super(GlobalID, self).__init__(ID, required=required, *args, **kwargs)
         self.node = node or Node
         self.parent_type_name = parent_type._meta.name if parent_type else None
 
     @staticmethod
-    def id_resolver(parent_resolver, node, root, info, parent_type_name=None, **args):
+    def id_resolver(
+        parent_resolver, node, root, info, parent_type_name=None, **args
+    ):
         type_id = parent_resolver(root, info, **args)
         parent_type_name = parent_type_name or info.parent_type.name
         return node.to_global_id(parent_type_name, type_id)  # root._meta.name
@@ -48,7 +52,9 @@ class GlobalID(Field):
 
 
 class NodeField(Field):
-    def __init__(self, node, type=False, deprecation_reason=None, name=None, **kwargs):
+    def __init__(
+        self, node, type=False, deprecation_reason=None, name=None, **kwargs
+    ):
         assert issubclass(node, Node), "NodeField can only operate in Nodes"
         self.node_type = node
         self.field_type = type
@@ -59,6 +65,7 @@ class NodeField(Field):
             type or node,
             description="The ID of the object",
             id=ID(required=True),
+            **kwargs
         )
 
     def get_resolver(self, parent_resolver):
@@ -75,7 +82,9 @@ class AbstractNode(Interface):
         _meta.fields = OrderedDict(
             id=GlobalID(cls, description="The ID of the object.")
         )
-        super(AbstractNode, cls).__init_subclass_with_meta__(_meta=_meta, **options)
+        super(AbstractNode, cls).__init_subclass_with_meta__(
+            _meta=_meta, **options
+        )
 
 
 class Node(AbstractNode):
@@ -98,9 +107,9 @@ class Node(AbstractNode):
             return None
 
         if only_type:
-            assert graphene_type == only_type, ("Must receive a {} id.").format(
-                only_type._meta.name
-            )
+            assert graphene_type == only_type, (
+                "Must receive a {} id."
+            ).format(only_type._meta.name)
 
         # We make sure the ObjectType implements the "Node" interface
         if cls not in graphene_type._meta.interfaces:
