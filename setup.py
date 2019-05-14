@@ -9,7 +9,9 @@ from setuptools.command.test import test as TestCommand
 _version_re = re.compile(r"VERSION\s+=\s+(.*)")
 
 with open("graphene/__init__.py", "rb") as f:
-    version = ast.literal_eval(_version_re.search(f.read().decode("utf-8")).group(1))
+    version = ast.literal_eval(
+        _version_re.search(f.read().decode("utf-8")).group(1)
+    )
 
 path_copy = sys.path[:]
 
@@ -60,7 +62,7 @@ tests_require = [
 
 setup(
     name="graphene",
-    version=version,
+    version="2.1.4",
     description="GraphQL Framework for Python",
     long_description=codecs.open(
         "README.rst", "r", encoding="ascii", errors="replace"
@@ -85,7 +87,7 @@ setup(
     packages=find_packages(exclude=["tests", "tests.*", "examples"]),
     install_requires=[
         "six>=1.10.0,<2",
-        "graphql-core>=2.1,<3",
+        "graphql-core>=2.2,<3",
         "graphql-relay>=0.4.5,<1",
         "aniso8601>=3,<=6.0.*",
     ],
