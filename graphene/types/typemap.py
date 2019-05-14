@@ -94,11 +94,11 @@ class TypeMap(GraphQLTypeMap):
         if isinstance(type_, (List, NonNull)):
             return self.reducer(map, type_.of_type)
         if type_._meta.name in map:
-            type_from_map = map[type_._meta.name]
-            if isinstance(type_from_map, GrapheneGraphQLType):
-                assert type_from_map.graphene_type == type_, (
-                    "Found different types with the same name in the schema: {}, {}."
-                ).format(type_from_map.graphene_type, type)
+            # type_from_map = map[type_._meta.name]
+            # if isinstance(type_from_map, GrapheneGraphQLType):
+            #     assert type_from_map.graphene_type == type_, (
+            #         "Found different types with the same name in the schema: {}, {}."
+            #     ).format(type_from_map.graphene_type, type_)
             return map
 
         if issubclass(type_, ObjectType):
